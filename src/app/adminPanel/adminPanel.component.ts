@@ -139,8 +139,8 @@ export class AdminPanelComponent implements OnInit {
       discount: this.selectedDisc?.percentage!
     };
     if (this.saleCode == '') return;
-    let couponExists = this.coupons.filter(c => c.code == this.saleCode)[0]?.ID ? false : true;;
-    if (!couponExists) { return alert("Coupon already exists") };
+    let couponExists = this.coupons.filter(c => c.code == this.saleCode).length > 0 ? true : false;
+    if (couponExists) { return alert("Coupon already exists") };
     this.coupons.push(coupon)
     const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
     this.http.

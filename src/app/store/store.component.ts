@@ -188,7 +188,7 @@ export class StoreComponent implements AfterViewInit {
         next: (response: any) => {
           this.discount = response.Discount;
           if (this.discounted) return;
-          this.sum = this.sum * this.discount / 100
+          this.sum = this.sum - (this.sum * this.discount / 100);
           this.discounted = true
         }
         ,

@@ -4,6 +4,7 @@ import { AdminPanelComponent } from './adminPanel/adminPanel.component';
 import { ForgotComponent } from './authorization/forgot/forgot.component';
 import { LoginComponent } from './authorization/login/login.component';
 import { SignupComponent } from './authorization/signup/signup.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './services/auth.guard';
 import { RoleGuard } from './services/role.guard';
 import { StoreComponent } from './store/store.component';
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'forgot', component: ForgotComponent },
   { path: 'admin', component: AdminPanelComponent, canActivate: [RoleGuard], data: { expectedRole: '1' } },
-  { path: 'profile', component: AdminPanelComponent, canActivate: [AuthGuard] }
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
