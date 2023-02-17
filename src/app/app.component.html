@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Project</title>
+</head>
+
+<body>
+
+  <header>
+    <div class="logOutBtn" *ngIf="localService.getData('accessToken')">
+      <button (click)="logOut()" pButton type="button" label="გასვლა" icon="pi pi-sign-out"
+        class="p-button-secondary"></button>
+    </div>
+  </header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</body>
+
+</html>

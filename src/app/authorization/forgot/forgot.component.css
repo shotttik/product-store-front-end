@@ -1,0 +1,126 @@
+.authContainer {
+    width: 1320px;
+    height: 550px;
+    margin-left: 300px;
+    margin-top: 166px;
+
+    background: #FFFFFF;
+    border: 2px solid #E7F2FD;
+    border-radius: 10px;
+
+    display: flex;
+}
+
+
+.titleContainer {
+    width: 501px;
+    height: 550px;
+
+    background: #F3F9FF;
+    border-radius: 10px 0px 0px 10px;
+}
+
+
+.title {
+    padding-top: 159px;
+    padding-left: 153px;
+
+    font-family: 'Helvetica Neue LT GEO';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 31px;
+
+    color: #0D66D0;
+}
+
+.bigEllipse {
+    margin-top: 58px;
+    margin-left: 156px;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+
+    background: rgba(13, 102, 208, 0.05);
+}
+
+
+.smallEllipse {
+    display: inline-block;
+    margin-top: 45px;
+    margin-left: 45px;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+
+    background: rgba(13, 102, 208, 0.2);
+}
+
+.vectorFigure {
+    margin-top: 23.85px;
+    margin-left: 18.15px;
+}
+
+
+.textContainer {
+    margin-top: 166px;
+    margin-left: 266px;
+    font-family: 'Helvetica Neue LT GEO';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+
+
+    color: #0D66D0;
+}
+
+
+
+.loginSubmitBTN {
+    display: inline-block;
+    margin-left: 167px;
+    margin-top: 22px;
+
+    border: none;
+
+    width: 151px;
+    height: 50px;
+    background: #0D66D0;
+    border-radius: 10px;
+
+    font-family: 'Helvetica Neue LT GEO';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+
+    color: #FFFFFF;
+    cursor: pointer;
+
+}
+
+.loginSubmitBTN:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.loginSubmitBTN:active {
+
+    transform: translateY(4px);
+}
+
+.forgotPassword {
+    display: inline-block;
+    text-decoration: none;
+
+    margin-left: 158px;
+    font-family: 'Helvetica Neue LT GEO';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+
+
+    color: #D0D0D0;
+}

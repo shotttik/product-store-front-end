@@ -1,0 +1,52 @@
+.emailContainer {
+    position: relative;
+}
+
+.emailContainer label {
+    display: inline-block;
+    padding-top: 46px;
+    padding-left: 169px;
+
+    font-family: 'Helvetica Neue LT GEO';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+
+
+    color: #1B385B;
+}
+
+
+.vector3 {
+    position: absolute;
+    top: 77.5px;
+    left: 175.5px;
+    width: 0px;
+    height: 16px;
+    border: 1px solid #D0D0D0;
+
+}
+
+.emailContainer input {
+    box-sizing: border-box;
+    display: block;
+    padding: 17px 27px 6px 16px;
+    margin-left: 166.5px;
+    width: 485px;
+    outline: 0;
+    border: 2px solid #E7F2FD;
+    border-width: 0 0 2px;
+
+}
+
+
+.emailContainer input:focus {
+    border-color: #0D66D0;
+}
+
+.emailFigure {
+    position: absolute;
+    left: 627.78px;
+    bottom: 5px;
+}

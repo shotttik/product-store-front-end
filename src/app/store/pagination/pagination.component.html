@@ -1,0 +1,29 @@
+<div class="pagination">
+  <div class="previousPage" (click)="addNewIndexes(currentPage-1)">
+    <div>
+      <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M4.31906 8.5432L0 4.2716L4.31906 0L5.55308 1.22046L2.46803 4.2716L5.55308 7.32274L4.31906 8.5432Z"
+          fill="#1B385B" />
+      </svg>
+    </div>
+
+  </div>
+  <div class="pageNumbers" *ngIf="pages">
+
+    <div class="pageNumber" *ngFor="let n of pages" [ngClass]="{'active' : n == currentPage}"
+      (click)="addNewIndexes(n)">
+      <p>{{n}}</p>
+    </div>
+
+  </div>
+  <div class="nextPage" (click)="addNewIndexes(currentPage+1)">
+    <div>
+      <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M1.25076 0.0107574L5.56982 4.28236L1.25076 8.55396L0.016746 7.3335L3.10179 4.28236L0.016746 1.23121L1.25076 0.0107574Z"
+          fill="#1B385B" />
+      </svg>
+    </div>
+  </div>
+</div>

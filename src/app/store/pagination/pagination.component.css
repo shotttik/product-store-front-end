@@ -1,0 +1,66 @@
+.pagination {
+    display: flex;
+    margin-top: 48.66px;
+    margin-left: 142px;
+}
+
+.previousPage,
+.nextPage {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+
+    background: #F6F6F6;
+    border-radius: 15px;
+}
+
+.previousPage div,
+.nextPage div {
+    padding-top: 5px;
+    padding-left: 11px;
+}
+
+
+
+.pageNumbers {
+    display: flex;
+    margin: 0 10px;
+    height: 30px;
+    background: #F6F6F6;
+    border-radius: 15px;
+
+}
+
+.pageNumber {
+    cursor: pointer;
+    margin: 6px;
+    font-family: 'Helvetica Neue LT GEO';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    /* identical to box height */
+
+
+    color: #1B385B;
+}
+
+
+.pageNumber.active {
+    position: relative;
+
+    margin-top: 2px;
+    width: 26px;
+    height: 26px;
+    background: #FFFFFF;
+    border-radius: 15px;
+
+}
+
+.pageNumber.active p {
+    position: absolute;
+    top: 3px;
+    left: 8px;
+}
