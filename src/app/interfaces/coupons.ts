@@ -4,6 +4,7 @@ export interface Coupon {
     createDate: Date;
     endDate: Date;
     discount: number;
+    isUsed: boolean;
 }
 
 export interface Expiration {

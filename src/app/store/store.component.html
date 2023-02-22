@@ -141,7 +141,8 @@
         <div class="CheckCouponBTN">
           <button pButton type="button" label="გადამოწმება" (click)="checkCoupon()"
             class="p-button-secondary p-button-rounded"></button>
-          <p style="color: red; float:right" *ngIf="discount != 0">{{code}} - {{discount}}%</p>
+          <p style="color: red;    display: inline;
+          margin-left: 236px;" *ngIf="discount != 0">{{code}} - {{discount}}%</p>
         </div>
       </div>
 

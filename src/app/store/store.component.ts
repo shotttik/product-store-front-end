@@ -192,7 +192,7 @@ export class StoreComponent implements AfterViewInit {
           this.discounted = true
         }
         ,
-        error: (response) => { this.discount = 0; this.discounted = false; this.calculateSum(); console.log(response) }
+        error: (response) => { this.discount = 0; this.discounted = false; this.calculateSum(); this.code = ''; console.log(response) }
       });
     return true;
   }
@@ -210,7 +210,7 @@ export class StoreComponent implements AfterViewInit {
       Products:
         this.userProducts.map(pr => { return { ID: pr.ID, Quantity: pr.Quantity } })
       ,
-      Coupon: this.coupon,
+      Coupon: this.code,
     }
     this.http.
       post(`https:/localhost:7154/api/BuyProducts`, this.transactionS, { headers: headers }).subscribe({
@@ -228,7 +228,8 @@ export class StoreComponent implements AfterViewInit {
       this.userProducts.map(up => {
         this.sum = this.sum + up.Price * up.Quantity;
       });
-      this.sum = this.sum * this.discount / 100
+      this.sum = this.sum - (this.sum * this.discount / 100)
+      this.discounted = true;
     }
     else {
       this.userProducts.map(up => {

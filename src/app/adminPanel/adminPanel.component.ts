@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { MessageService, SortEvent } from 'primeng/api';
 import { Product } from 'src/app/interfaces/product';
 import { StoreService } from 'src/app/services/store.service';
 import { Coupon } from '../interfaces/coupons';
@@ -68,7 +68,9 @@ export class AdminPanelComponent implements OnInit {
 
   ngOnInit() {
     this.storeService.getStoreProducts().subscribe((data) => { this.products = data; });
-    this.getCoupons()
+    this.getCoupons();
+
+
   }
   onSubmit() {
 
@@ -136,7 +138,8 @@ export class AdminPanelComponent implements OnInit {
       code: this.saleCode,
       createDate: new Date(),
       endDate: this.storeService.getExpirationDate(this.selectedExp!.days),
-      discount: this.selectedDisc?.percentage!
+      discount: this.selectedDisc?.percentage!,
+      isUsed: false
     };
     if (this.saleCode == '') return;
     let couponExists = this.coupons.filter(c => c.code == this.saleCode).length > 0 ? true : false;
@@ -151,11 +154,13 @@ export class AdminPanelComponent implements OnInit {
         error: (response) =>
           console.log(response)
       });
+    setTimeout(() => {
+      this.getCoupons()
+    }, 200);
   }
 
   onDeleteCoupon(id: number, code: string) {
     this.coupons = this.coupons.filter((coupon: Coupon) => { console.log(code, coupon.code); return coupon.code != code });
-    console.log(this.coupons);
     const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
     this.http.
       post(`https:/localhost:7154/api/DelCoupon/${id}`, { headers: headers }).subscribe({
@@ -172,16 +177,44 @@ export class AdminPanelComponent implements OnInit {
     const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
     this.http.
       get(`https:/localhost:7154/api/GetCoupons`, { headers: headers }).subscribe({
-        next: (response: any) =>
-          this.coupons = response
+        next: (response: any) => {
+          this.coupons = response;
+          console.log(this.coupons)
+
+        }
         ,
         error: (response) =>
           console.log(response)
       });
+
   };
 
   dateConverter(date: any) {
     return typeof (date) == typeof (new Date()) ? date.toDateString() : new Date(date).toDateString();
-  }
+  };
+
+  isExpired(date: any) {
+    return new Date(date) < new Date()
+  };
+
+
+  customSort(event: SortEvent) {
+    event.data!.sort((data1, data2) => {
+      let result = null;
+      if (!data1.isUsed && this.isExpired(data1.endDate) < this.isExpired(data2.endDate)) {
+        result = -1;
+        return (event.order! * result);
+      } else if (data1.isUsed < data2.isUsed) {
+        result = -1;
+        return (event.order! * result);
+
+      } else {
+        result = 1;
+        return (event.order! * result);
+      }
+
+    });
+
+  };
 
 }
