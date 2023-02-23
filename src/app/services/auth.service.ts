@@ -26,8 +26,13 @@ export class AuthService {
   tokenToUserData() {
     const token = localStorage.getItem('accessToken')
     const dToken = this.jwtHelper.decodeToken(token!);
-    console.log(dToken)
     localStorage.setItem('balance', dToken.Balance);
+  }
+
+  getUserID(){
+    const token = localStorage.getItem('accessToken')
+    const dToken = this.jwtHelper.decodeToken(token!);
+    return dToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/primarysid"] //@TODO is it corretct?
   }
 
 

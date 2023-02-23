@@ -1,1 +1,45 @@
-<p>profile works!</p>
+<div class="grid-container">
+    <div class="card" style="width: 820px; height: 600px;">
+        <p-table [value]="userProducts" [scrollable]="true" columnResizeMode="fit" scrollHeight="400px" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>სახელი</th>
+                    <th>ფასი</th>
+                    <th>რაოდენობა</th>
+                    <th>ჯამი</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{product.Name}}</td>
+                    <td>{{product.Price | currency}}</td>
+                    <td>{{product.Quantity}}</td>
+                    <td>{{product.Price * product.Quantity | currency}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="editUser">
+        <div class="titleContainer">
+            <p>ჩემი გვერდი</p>
+        </div>
+        <div class="bigLine">
+        </div>
+        <div class="info">
+            <div class="balanceContainer">
+                <span>
+                    <p>ბალანსი: </p>
+                    <strong>{{balance | currency}}</strong>
+                </span>
+            </div>
+            <div class="paidContainer">
+                <span>
+                    <p>სულ გადახდილი: </p>
+                    <strong>{{paid | currency}}</strong>            
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>

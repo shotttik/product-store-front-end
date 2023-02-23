@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProfileComponent } from './profile/profile.component';
 import { LocalService } from './services/local.service';
 
 @Component({
@@ -7,18 +8,28 @@ import { LocalService } from './services/local.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   title = 'auth';
 
-  constructor(public localService: LocalService, private router: Router) { };
 
-  ngOnInit(): void {
+  constructor(public localService: LocalService, public router: Router) { };
+
+  ngAfterViewInit(): void {
+
   };
 
   logOut() {
     this.localService.clearData();
     this.router.navigate(['/login']);
 
+  }
+
+  goPRofileOrMarket(onProfile: boolean):void{
+    if (onProfile){
+      this.router.navigate(["/store"]);
+    }else{
+      this.router.navigate(["/profile"]);
+    }
   }
 
 

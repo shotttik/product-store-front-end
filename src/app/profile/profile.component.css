@@ -1,0 +1,60 @@
+.card{
+    margin: 69px 0 0 300px;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.editUser{
+    width: 486px;
+    height: 832px;
+    background-color: #ffffff;
+}
+
+.titleContainer{
+    margin-top: 59px;
+    margin-left: 194px;
+    font-family: 'Helvetica Neue LT GEO';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #0D66D0;
+}
+
+.bigLine {
+    width: 482px;
+    height: 0px;
+
+    border: 2px solid #E7F2FD;
+}
+
+.balanceContainer span, .paidContainer span{
+    display: inline-flex;
+}
+
+.balanceContainer span{
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.paidContainer span{
+    margin-left: 30px;
+    margin-top: 10px;
+}
+.balanceContainer span p {
+    margin-right: 5px;
+    font-family: 'Helvetica Neue LT GEO';
+    font-size: 20px;
+    color: forestgreen;
+}
+.paidContainer span p {
+    margin-right: 5px;
+    font-family: 'Helvetica Neue LT GEO';
+    font-size: 20px;
+    color: orangered;
+}
+
