@@ -9,7 +9,8 @@
 </head>
 
 <body>
-
+  <p-toast position="top-right">
+  </p-toast>
   <header>
     <div class="logOutBtn" *ngIf="localService.getData('accessToken')">
       <button (click)="goPRofileOrMarket(router.url == '/profile' ? true: false)" pButton type="button" [label]="router.url != '/profile' ? 'პროფილი': 'მარკეტი' " [icon]="router.url != '/profile' ? 'pi pi-user': 'pi pi-shopping-bag'" class="p-button-info"></button>
