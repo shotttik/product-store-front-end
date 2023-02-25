@@ -13,7 +13,8 @@
   </p-toast>
   <header>
     <div class="logOutBtn" *ngIf="localService.getData('accessToken')">
-      <button *ngIf="localService.getData('level') == '0'" (click)="goPRofileOrMarket(router.url == '/profile' ? true: false)" pButton type="button" [label]="router.url != '/profile' ? 'პროფილი': 'მარკეტი' " [icon]="router.url != '/profile' ? 'pi pi-user': 'pi pi-shopping-bag'" class="p-button-info"></button>
+      <button *ngIf="isSuperUser()" (click)="goToUsers()" pButton type="button" icon="pi pi-user" label="მომხმარებლები" class="p-button-info"></button>
+      <button *ngIf="localService.getData('level') == '0'" (click)="goPRofileOrMarket(router.url == '/profile' ? true: false)" pButton type="button" [label]="IsStoreComp() ? 'პროფილი': 'მარკეტი' " [icon]="IsStoreComp() ? 'pi pi-user': 'pi pi-shopping-bag'" class="p-button-info"></button>
       <button (click)="logOut()" pButton type="button" label="გასვლა" icon="pi pi-sign-out"
         class="p-button-secondary"></button>
     </div>

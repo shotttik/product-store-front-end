@@ -28,6 +28,7 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './adminPanel/users/users.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { ProfileComponent } from './profile/profile.component';
     PaginationComponent,
     AdminPanelComponent,
     ProfileComponent,
-
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,14 +61,16 @@ import { ProfileComponent } from './profile/profile.component';
     MessagesModule,
     MessageModule,
     ToastModule,
-    InputTextModule
+    InputTextModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptorService,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true,
+    },
+  ],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

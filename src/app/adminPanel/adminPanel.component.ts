@@ -7,6 +7,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { Coupon } from '../interfaces/coupons';
 import { LocalService } from '../services/local.service';
 import { Expiration, Discount } from '../interfaces/coupons';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-adminPanel',
@@ -42,7 +43,8 @@ export class AdminPanelComponent implements OnInit {
     private storeService: StoreService,
     private localStore: LocalService,
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) {
     this.expirations = [
       { name: '1 დღე', code: '1D', days: 1 },

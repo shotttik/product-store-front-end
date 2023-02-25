@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthService } from './services/auth.service';
 import { LocalService } from './services/local.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class AppComponent implements AfterViewInit {
   constructor(
     public localService: LocalService,
     public router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) {}
 
   ngAfterViewInit(): void {}
@@ -37,5 +39,16 @@ export class AppComponent implements AfterViewInit {
     } else {
       this.router.navigate(['/profile']);
     }
+  }
+  isSuperUser() {
+    return this.authService.IsSuperUser();
+  }
+
+  IsStoreComp() {
+    return this.router.url == '/store';
+  }
+
+  goToUsers() {
+    this.router.navigate(['/admin/users']);
   }
 }

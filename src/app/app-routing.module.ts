@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './adminPanel/adminPanel.component';
+import { UsersComponent } from './adminPanel/users/users.component';
 import { ForgotComponent } from './authorization/forgot/forgot.component';
 import { LoginComponent } from './authorization/login/login.component';
 import { SignupComponent } from './authorization/signup/signup.component';
@@ -15,13 +16,23 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot', component: ForgotComponent },
-  { path: 'admin', component: AdminPanelComponent, canActivate: [RoleGuard], data: { expectedRole: '1' } },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  {
+    path: 'admin',
+    component: AdminPanelComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: '1' },
+  },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: 'admin/users',
+    component: UsersComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: '1', IsSuperUser: true },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

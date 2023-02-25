@@ -25,6 +25,7 @@ export class RoleGuard implements CanActivate {
     | boolean
     | UrlTree {
     const expectedRole = route.data['expectedRole'];
+    const IsSuperUser = route.data['IsSuperUser'];
     const token = localStorage.getItem('accessToken');
     if (!token) {
       this.router.navigate(['/login']);
@@ -39,6 +40,9 @@ export class RoleGuard implements CanActivate {
       this.router.navigate(['/login']);
       localStorage.clear();
       return false;
+    }
+    if (IsSuperUser) {
+      return tokenPayload.IsSuperUser == 'True';
     }
     return true;
   }
