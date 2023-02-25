@@ -44,7 +44,8 @@ export class StoreComponent implements AfterViewInit {
     private http: HttpClient,
     private router: Router,
     private localStore: LocalService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private messageService: MessageService
   ) {
     this.email = this.localStore.getData('email');
     this.UserID = parseInt(this.localStore.getData('id')!);
@@ -111,7 +112,11 @@ export class StoreComponent implements AfterViewInit {
     }
     this.localStore.saveData('cart', JSON.stringify(this.userProducts));
     this.calculateSum();
-
+    this.messageService.add({
+      severity: 'success',
+      summary: 'ყურადღება!',
+      detail: 'წარმატებით შეიცვალა პროდუქტის რაოდენობა',
+    });
     return true;
   }
 
@@ -121,10 +126,20 @@ export class StoreComponent implements AfterViewInit {
         ? false
         : true;
     if (!Add) {
-      return alert('Already Added, Sorry btw I dont like this alerts');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'ყურადღება!',
+        detail: 'პროდუქტი უკვე დამატებულია',
+      });
+      return false;
     }
     if (p.Quantity <= 0) {
-      return alert('Quantity must be greater than zero');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'ყურადღება!',
+        detail: 'პროდუქტი ამოწურულია!!',
+      });
+      return false;
     }
 
     p.Quantity -= 1;
@@ -145,6 +160,12 @@ export class StoreComponent implements AfterViewInit {
       this.localStore.saveData('cart', JSON.stringify(cartProducts));
     }
     this.calculateSum();
+    this.messageService.add({
+      severity: 'success',
+      summary: 'ყურადღება!',
+      detail: 'პროდუქტი წარმატებით დაემატა კალათაში!!',
+    });
+    return true;
   }
 
   removeUserProduct(id: number) {
@@ -162,6 +183,11 @@ export class StoreComponent implements AfterViewInit {
     if (!cartProducts) return false;
     this.localStore.saveData('cart', JSON.stringify(this.userProducts));
     this.calculateSum();
+    this.messageService.add({
+      severity: 'success',
+      summary: 'ყურადღება!',
+      detail: 'პროდუქტი წაიშალა კალათიდან!!',
+    });
     return true;
   }
 
@@ -203,17 +229,26 @@ export class StoreComponent implements AfterViewInit {
       })
       .subscribe({
         next: (response: any) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'შეტყობინება',
+            detail: response.Message,
+          });
           this.discount = response.Discount;
           if (this.discounted) return;
           this.sum = this.sum - (this.sum * this.discount) / 100;
           this.discounted = true;
         },
         error: (response) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ყურადღება!',
+            detail: response.Message,
+          });
           this.discount = 0;
           this.discounted = false;
           this.calculateSum();
           this.code = '';
-          console.log(response);
         },
       });
     return true;
@@ -228,7 +263,12 @@ export class StoreComponent implements AfterViewInit {
       return false;
     }
     if (this.sum > this.Balance) {
-      return alert('Balance is not enough to buy products');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'ყურადღება!',
+        detail: 'ბალანსი არ არის საკმარისი პროდუქტების/პროდუქტის საყიდლად!!',
+      });
+      return false;
     }
     this.transactionS = {
       Paid: this.sum,
@@ -243,10 +283,20 @@ export class StoreComponent implements AfterViewInit {
       })
       .subscribe({
         next: (response: any) => {
-          console.log(response);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'შეტყობინება!',
+            detail: response.Message,
+          });
           this.router.navigate(['/profile']);
         },
-        error: (response) => console.log(response),
+        error: (response) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ყურადღება!',
+            detail: response.Message,
+          });
+        },
       });
     return true;
   }

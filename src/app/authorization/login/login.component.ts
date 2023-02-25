@@ -6,14 +6,14 @@ import { EmailComponent } from '../inputs/email/email.component';
 import { PasswordComponent } from '../inputs/password/password.component';
 import { LocalService } from 'src/app/services/local.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css',]
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements AfterViewInit {
-
   @ViewChild(EmailComponent) emailComponent: any;
   @ViewChild(PasswordComponent) passwordComponent: any;
 
@@ -29,37 +29,34 @@ export class LoginComponent implements AfterViewInit {
     private http: HttpClient,
     private router: Router,
     private localStore: LocalService,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageService: MessageService
   ) {
     const navigation = this.router.getCurrentNavigation()!;
     if (navigation.extras.state) {
       this.error = '';
       this.response_message = navigation.extras.state['Message'];
     }
-
-
   }
 
   ngAfterViewInit(): void {
     this.localStore.clearData();
     this.loginForm = new FormGroup({
       email: this.emailComponent.emailControl,
-      password: this.passwordComponent.passwordControl
-    })
+      password: this.passwordComponent.passwordControl,
+    });
   }
 
-
-
-
-
   onSubmit() {
-    if (this.loginForm?.invalid || this.loginForm == undefined) return
+    if (this.loginForm?.invalid || this.loginForm == undefined) return;
     let data = JSON.stringify(this.loginForm.value);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/json; charset=utf-8'
+    );
 
-
-    this.http.
-      post('https://localhost:7154/api/login', data, { headers: headers })
+    this.http
+      .post('https://localhost:7154/api/login', data, { headers: headers })
       .subscribe({
         next: (response: any) => {
           //TODO should be removed
@@ -70,15 +67,21 @@ export class LoginComponent implements AfterViewInit {
           this.success = true;
           this.authService.tokenToUserData();
 
-          const url = response.Level == 1 ? '/admin' : '/store'
-          this.router.navigate([url], { state: { email: this.loginForm.value.email } });
-
+          const url = response.Level == 1 ? '/admin' : '/store';
+          this.router.navigate([url], {
+            state: { email: this.loginForm.value.email },
+          });
         },
         error: (response) => {
           this.response_message = '';
           this.error = response.error.Message;
-          setTimeout(() => this.error = '', 5000)
-        }
-      })
+          setTimeout(() => (this.error = ''), 5000);
+        },
+      });
+    this.messageService.add({
+      severity: 'success',
+      summary: 'შეტყობინება!',
+      detail: 'წარმატებით გაიარეთ ავტორიზაცია',
+    });
   }
 }
