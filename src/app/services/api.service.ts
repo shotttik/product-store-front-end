@@ -15,7 +15,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getUsers() {
-    let url = this.baseUrl + 'GetUsers';
+    let url = this.baseUrl + '/GetUsers';
     return this.http.post(url, this.httpOptions);
     
   }

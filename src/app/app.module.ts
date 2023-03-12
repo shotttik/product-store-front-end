@@ -29,6 +29,7 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './adminPanel/users/users.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { UsersComponent } from './adminPanel/users/users.component';
     MessageModule,
     ToastModule,
     InputTextModule,
+    CheckboxModule,
   ],
   providers: [
     {

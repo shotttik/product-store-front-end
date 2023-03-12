@@ -1,1 +1,76 @@
-<p>users works!</p>
+<div class="card">
+    <p-table class="usersTable" [value]="users" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5%">ID</th>
+                <th style="width:30%">მეილი</th>
+                <th style="width:25%">სტატუსი</th>
+                <th style="width:15%">ბალანსი</th>
+                <th style="width:10%">სუპერიუზერი</th>
+                <th style="width:15%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="user">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            {{user.id}}
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{user.id}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            {{user.email}}
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{user.email}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="levels" appendTo="body" [(ngModel)]="user.level" [style]="{'width':'100%'}"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{user.level == 1 ? "ადმინისტრატორი": "მომხმარებელი"}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="user.balance">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{user.balance | currency: 'USD'}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align: center;">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                             <p-checkbox [(ngModel)]="user.isSuperUser" [binary]="true" inputId="binary"></p-checkbox>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <i class="pi pi-check-circle" *ngIf="user.isSuperUser; else notSuperUser " style="font-size: 1.5rem; color: green;"></i>
+                            <ng-template #notSuperUser><i class="pi pi-times-circle" #notSuperUser style="font-size: 1.5rem; color: red;"></i></ng-template>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(user)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(user, ri)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(user, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

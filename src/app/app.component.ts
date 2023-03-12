@@ -40,15 +40,23 @@ export class AppComponent implements AfterViewInit {
       this.router.navigate(['/profile']);
     }
   }
-  isSuperUser() {
+  isSuperUser(){
     return this.authService.IsSuperUser();
   }
 
-  IsStoreComp() {
+  IsStoreComp(){
     return this.router.url == '/store';
   }
 
-  goToUsers() {
-    this.router.navigate(['/admin/users']);
+
+  goToUsers(onUsers: boolean) {
+    if (onUsers) {
+      this.router.navigate(['/admin']);
+    } else {
+      this.router.navigate(['/admin/users']);
+    }
+  }
+  IsUsers() {
+    return this.router.url == '/admin/users';
   }
 }
