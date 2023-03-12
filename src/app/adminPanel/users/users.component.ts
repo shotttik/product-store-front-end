@@ -15,7 +15,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {}
   ngOnInit(): void {
     this.apiService.getUsers().subscribe({
@@ -33,25 +33,45 @@ export class UsersComponent implements OnInit {
   }
 
   onRowEditSave(user: User, index: number) {
-    if (user.balance > 0) {
-      delete this.clonedUser[user.id];
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'მომხმარებელი განახლდა',
-      });
-    } else {
-      this.onRowEditCancel(user, index);
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'ბალანსი არავალიდურია',
-      });
+    if (user.balance < 0) {
+      this.onSaveError(user, index);
+      return;
     }
+    if (user.isSuperUser == true && user.level == 0) {
+      this.onSaveError(user, index);
+      return;
+    }
+
+    delete this.clonedUser[user.id];
+
+    this.apiService.updateUser(user).subscribe({
+      next: (response: any) => response,
+      error: (response) =>
+        this.messageService.add({
+          severity: 'error',
+          summary: 'შეცდომა',
+          detail: 'ბალანსი არავალიდურია',
+        }),
+    });
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'მომხმარებელი განახლდა',
+    });
   }
 
   onRowEditCancel(user: User, index: number) {
     this.users[index] = this.clonedUser[user.id];
     delete this.clonedUser[user.id];
+  }
+
+  onSaveError(user: User, index: number) {
+    this.onRowEditCancel(user, index);
+    this.messageService.add({
+      severity: 'error',
+      summary: 'შეცდომა',
+      detail: 'არასწორი მონაცემები',
+    });
   }
 }

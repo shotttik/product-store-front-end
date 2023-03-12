@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class ApiService {
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
     }),
   };
   private baseUrl = 'https://localhost:7154/api';
@@ -17,6 +18,10 @@ export class ApiService {
   getUsers() {
     let url = this.baseUrl + '/GetUsers';
     return this.http.post(url, this.httpOptions);
-    
+  }
+
+  updateUser(data: User) {
+    let url = this.baseUrl + '/UserUpdate';
+    return this.http.post(url, data, this.httpOptions);
   }
 }
