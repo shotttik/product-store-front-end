@@ -5,20 +5,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiService {
-  HEADERS = new HttpHeaders().set(
-    'Content-Type',
-    'application/json; charset=utf-8'
-  );
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+  private baseUrl = 'https://localhost:7154/api';
+
   constructor(private http: HttpClient) {}
 
   getUsers() {
-    this.http
-      .post(`https://localhost:7154/api/GetUsers`, {
-        headers: this.HEADERS,
-      })
-      .subscribe({
-        next: (response: any) => console.log(response),
-        error: (response) => console.log(response),
-      });
+    let url = this.baseUrl + 'GetUsers';
+    return this.http.post(url, this.httpOptions);
+    
   }
 }
