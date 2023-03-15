@@ -40,14 +40,13 @@ export class AppComponent implements AfterViewInit {
       this.router.navigate(['/profile']);
     }
   }
-  isSuperUser(){
+  isSuperUser() {
     return this.authService.IsSuperUser();
   }
 
-  IsStoreComp(){
+  IsStoreComp() {
     return this.router.url == '/store';
   }
-
 
   goToUsers(onUsers: boolean) {
     if (onUsers) {
@@ -58,5 +57,9 @@ export class AppComponent implements AfterViewInit {
   }
   IsUsers() {
     return this.router.url == '/admin/users';
+  }
+
+  goToCoupons() {
+    this.router.navigate(['/admin/coupons']);
   }
 }

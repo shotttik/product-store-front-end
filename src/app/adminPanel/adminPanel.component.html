@@ -1,5 +1,12 @@
 <div class="addProduct">
-  <input class="ID" disabled type="number" *ngIf="id" matInput [(ngModel)]="id">
+  <textarea
+    class="ID"
+    disabled
+    type="number"
+    *ngIf="id"
+    matInput
+    [(ngModel)]="id"
+  ></textarea>
   <form [formGroup]="newProductForm" (ngSubmit)="onSubmit()">
     <div class="title" *ngIf="!id">
       <h1>ახალი პროდუქტი</h1>
@@ -9,48 +16,72 @@
     </div>
     <mat-form-field class="name-field">
       <mat-label>სახელი</mat-label>
-      <input matInput [(ngModel)]="name" formControlName="Name">
-
+      <input matInput [(ngModel)]="name" formControlName="Name" />
     </mat-form-field>
 
     <mat-form-field class="quantity-field">
       <mat-label>რაოდენობა</mat-label>
-      <input type="number" matInput [(ngModel)]="quantity" formControlName="Quantity">
+      <input
+        type="number"
+        matInput
+        [(ngModel)]="quantity"
+        formControlName="Quantity"
+      />
     </mat-form-field>
 
     <mat-form-field class="price-field">
       <mat-label>ფასი</mat-label>
-      <input type="number" matInput [(ngModel)]="price" formControlName="Price">
+      <input
+        type="number"
+        matInput
+        [(ngModel)]="price"
+        formControlName="Price"
+      />
       <mat-icon matSuffix>$</mat-icon>
-
     </mat-form-field>
-
-    <input [disabled]="!newProductForm.valid" type="submit" class="addBTN" [value]="!id?'დამატება':'შენახვა'">
-    <input class="clearBTN" type="button" (click)="onClear()" value="გასუფთავება">
-
-  </form>
-  <div class="generateCode">
-    <p-card header="კუპონის შექმნა" subheader="დავაგენერირო კუპონი?" [style]="{width: '360px'}"
-      styleClass="p-card-shadow">
-
-      <div class="cuponCode">
-        <p-dropdown class="expDrop" [options]="expirations" [(ngModel)]="selectedExp" optionLabel="name"></p-dropdown>
-        <p-dropdown class="discDrop" [options]="discounts" [(ngModel)]="selectedDisc" optionLabel="name"></p-dropdown>
-        <input type="text" [value]="saleCode" pInputText disabled>
+    <div class="uploads">
+      <div class="docUpload">
+        <p-fileUpload
+          mode="basic"
+          #DocFileUpload
+          chooseLabel="დოკუმენტი"
+          accept="application/pdf"
+          (uploadHandler)="onBasicUpload($event)"
+        ></p-fileUpload>
       </div>
-      <ng-template pTemplate="footer">
-        <p-button type="submit" (click)="onSave()" label="შენახვა" icon="pi pi-check"></p-button>
-        <p-button (click)="onGenerate()" label="Generate" styleClass="p-button-secondary "
-          [style]="{'margin-left': '.5em'}"><i class="pi pi-spin pi-spinner"
-            style="font-size: 1rem;margin-right: 5px ;"></i>
-        </p-button>
-      </ng-template>
-    </p-card>
-  </div>
+      <div class="imgUpload">
+        <p-fileUpload
+          #ImgFileUpload
+          accept="image/*"
+          (uploadHandler)="onBasicUpload($event)"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          chooseLabel="სურათი"
+        ></p-fileUpload>
+      </div>
+    </div>
+    <input
+      [disabled]="!newProductForm.valid"
+      type="submit"
+      class="addBTN"
+      [value]="!id ? 'დამატება' : 'შენახვა'"
+    />
+    <input
+      class="clearBTN"
+      type="button"
+      (click)="onClear()"
+      value="გასუფთავება"
+    />
+  </form>
 </div>
 
 <div class="card productsCard">
-  <p-table [value]="products" [scrollable]="true" scrollHeight="400px" [tableStyle]="{'min-width': '50rem'}">
+  <p-table
+    [value]="products"
+    [scrollable]="true"
+    scrollHeight="400px"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
@@ -61,47 +92,22 @@
     </ng-template>
     <ng-template pTemplate="body" let-product>
       <tr>
-        <td>{{product.ID}}</td>
-        <td>{{product.Name}}</td>
-        <td>{{product.Quantity}}</td>
-        <td>{{product.Price}}$
-          <mat-icon class="editIcon"
-            (click)="onEdit(product.ID, product.Name, product.Quantity, product.Price)">edit</mat-icon>
-          <mat-icon class="deleteIcon" (click)="onDelete(product.ID)">delete</mat-icon>
+        <td>{{ product.ID }}</td>
+        <td>{{ product.Name }}</td>
+        <td>{{ product.Quantity }}</td>
+        <td>
+          {{ product.Price }}$
+          <mat-icon
+            class="editIcon"
+            (click)="
+              onEdit(product.ID, product.Name, product.Quantity, product.Price)
+            "
+            >edit</mat-icon
+          >
+          <mat-icon class="deleteIcon" (click)="onDelete(product.ID)"
+            >delete</mat-icon
+          >
         </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
-<div class="card couponsCard">
-  <p-table [value]="coupons" [scrollable]="true" (sortFunction)="customSort($event)" [customSort]="true"
-    scrollHeight="400px" [tableStyle]="{'min-width': '50rem'}">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>კოდი</th>
-        <th>შექმნა</th>
-        <th>დასასრული</th>
-        <th>პროცენტი</th>
-        <th pSortableColumn="isUsed">სტატუსი
-          <p-sortIcon field="isUsed"></p-sortIcon>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-coupon>
-      <tr>
-        <td>{{coupon.code}}</td>
-        <td>{{dateConverter(coupon.createDate)}}</td>
-        <td>{{dateConverter(coupon.endDate)}}</td>
-        <td>{{coupon.discount}}
-          <mat-icon class="deleteIcon" (click)="onDeleteCoupon(coupon.id, coupon.code)">delete</mat-icon>
-        </td>
-        <td><span *ngIf="isExpired(coupon.endDate)" class="coupon-status coupon-inactive"> ვადაგასულია</span>
-          <span *ngIf="!isExpired(coupon.endDate)"
-            [class]="!coupon.isUsed ?  'coupon-status coupon-active':'coupon-status coupon-inactive'">
-            {{coupon.isUsed ?
-            "გამოყენებულია":"გამოსაყენებელია"}}</span>
-        </td>
-
       </tr>
     </ng-template>
   </p-table>

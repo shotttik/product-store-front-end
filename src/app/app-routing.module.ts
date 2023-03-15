@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './adminPanel/adminPanel.component';
+import { CouponsComponent } from './adminPanel/coupons/coupons.component';
 import { UsersComponent } from './adminPanel/users/users.component';
 import { ForgotComponent } from './authorization/forgot/forgot.component';
 import { LoginComponent } from './authorization/login/login.component';
@@ -28,6 +29,12 @@ const routes: Routes = [
     component: UsersComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: '1', IsSuperUser: true },
+  },
+  {
+    path: 'admin/coupons',
+    component: CouponsComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: '1' },
   },
 ];
 

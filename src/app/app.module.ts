@@ -30,6 +30,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './adminPanel/users/users.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FileUploadModule } from 'primeng/fileupload';
+import { CouponsComponent } from './adminPanel/coupons/coupons.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     AdminPanelComponent,
     ProfileComponent,
     UsersComponent,
+    CouponsComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     ToastModule,
     InputTextModule,
     CheckboxModule,
+    FileUploadModule,
   ],
   providers: [
     {

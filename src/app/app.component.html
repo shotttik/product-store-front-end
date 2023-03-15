@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth Project</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auth Project</title>
-</head>
-
-<body>
-  <p-toast position="top-right">
-  </p-toast>
-  <header>
-    <div class="logOutBtn" *ngIf="localService.getData('accessToken')">
-      <button *ngIf="isSuperUser()" (click)="goToUsers(router.url == '/admin/users' ? true : false)" pButton type="button" [icon]="IsUsers() ? 'pi pi-home' : 'pi pi-user'" [label]="IsUsers() ? 'პანელი':'მომხმარებლები' " class="p-button-info"></button>
-      <button *ngIf="localService.getData('level') == '0'" (click)="goPRofileOrMarket(router.url == '/profile' ? true: false)" pButton type="button" [label]="IsStoreComp() ? 'პროფილი': 'მარკეტი' " [icon]="IsStoreComp() ? 'pi pi-user': 'pi pi-shopping-bag'" class="p-button-info"></button>
-      <button (click)="logOut()" pButton type="button" label="გასვლა" icon="pi pi-sign-out"
-        class="p-button-secondary"></button>
-    </div>
-  </header>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-</body>
-
+  <body>
+    <p-toast position="top-right"> </p-toast>
+    <header>
+      <div class="logOutBtn" *ngIf="localService.getData('accessToken')">
+        <button
+          *ngIf="router.url != '/admin/coupons' && router.url != '/store'"
+          pButton
+          type="button"
+          (click)="goToCoupons()"
+          icon="pi pi-credit-card"
+          label="კუპონები"
+          class="p-button-info"
+        ></button>
+        <button
+          *ngIf="isSuperUser()"
+          (click)="goToUsers(router.url == '/admin/users' ? true : false)"
+          pButton
+          type="button"
+          [icon]="IsUsers() ? 'pi pi-home' : 'pi pi-user'"
+          [label]="IsUsers() ? 'პანელი' : 'მომხმარებლები'"
+          class="p-button-info"
+        ></button>
+        <button
+          *ngIf="localService.getData('level') == '0'"
+          (click)="goPRofileOrMarket(router.url == '/profile' ? true : false)"
+          pButton
+          type="button"
+          [label]="IsStoreComp() ? 'პროფილი' : 'მარკეტი'"
+          [icon]="IsStoreComp() ? 'pi pi-user' : 'pi pi-shopping-bag'"
+          class="p-button-info"
+        ></button>
+        <button
+          (click)="logOut()"
+          pButton
+          type="button"
+          label="გასვლა"
+          icon="pi pi-sign-out"
+          class="p-button-secondary"
+        ></button>
+      </div>
+    </header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </body>
 </html>

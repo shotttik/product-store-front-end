@@ -1,0 +1,66 @@
+.couponsCard {
+  margin: 50px 150px 0 50px;
+  float: left;
+}
+
+.generateCode {
+  margin-top: 50px;
+  margin-left: 350px;
+  text-align: center;
+}
+
+::ng-deep .generateCode .p-card-body {
+  box-shadow: 0 0 10px rgb(75 75 75);
+}
+
+.cuponCode input {
+  display: block;
+  margin-top: 10px;
+  margin-left: 63px;
+  height: 50px;
+  resize: horizontal;
+  width: 200px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.expDrop {
+  margin-right: 10px;
+}
+
+.coupons {
+  float: right;
+}
+
+.coupon-status {
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.coupon-active {
+  background: #c8e6c9;
+  color: #256029;
+}
+
+.coupon-inactive {
+  background: #ffcdd2;
+  color: #c63737;
+}
+
+.card mat-icon {
+  cursor: pointer;
+  display: block;
+  float: right;
+}
+
+.card .deleteIcon:hover {
+  color: red;
+}
+
+.card .editIcon:hover {
+  color: goldenrod;
+}

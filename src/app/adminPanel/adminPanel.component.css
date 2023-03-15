@@ -1,184 +1,132 @@
 .ID {
-    position: absolute;
-    top: 30px;
-    left: 30px;
-    width: 50px;
-    height: 40px;
-    border-radius: 20%;
-    box-shadow: #6b6b6b;
-    font-size: 30px;
-    text-align: center;
-    padding-left: 18px
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 50px;
+  height: 40px;
+  border-radius: 20%;
+  font-size: 30px;
+  text-align: center;
+  overflow: hidden;
+  outline: none;
+  resize: none;
 }
-
 
 .productsCard {
-    margin: 50px 50px 0 50px;
-}
-
-.couponsCard {
-    margin: 10px 80px 0 50px;
-    float: right;
+  margin: 50px 50px 0 50px;
 }
 
 .mdc-data-table__table {
-    min-width: 0;
+  min-width: 0;
 }
 
 .mat-column-name {
-    width: 35% !important;
+  width: 35% !important;
 }
 
 .mat-column-quantity {
-    width: 20% !important;
+  width: 20% !important;
 }
 
 .mat-column-price {
-    width: 20% !important
+  width: 20% !important;
 }
 
 .addProduct {
-    position: relative;
-    float: left;
-    background: #FFFFFF;
-    height: 400px;
-    width: 500px;
-    margin-left: 400px;
-    margin-right: 100px;
-    box-shadow: 0 0 10px rgb(75, 75, 75);
+  position: relative;
+  float: left;
+  background: #ffffff;
+  width: 700px;
+  margin-left: 200px;
+  margin-right: 100px;
+  box-shadow: 0 0 10px rgb(75, 75, 75);
 }
 
 .addProduct form {
-    margin-top: 30px;
-    display: block;
-    text-align: center;
-
+  margin-top: 30px;
+  display: block;
+  text-align: center;
 }
 
 .title h1 {
-    font-family: 'Helvetica Neue LT GEO';
-    color: orange;
+  font-family: "Helvetica Neue LT GEO";
+  color: orange;
 }
 
 .mat-mdc-form-field {
-    display: block;
+  display: block;
 }
 
 .name-field {
-    width: 250px;
-    margin-left: 25%;
+  width: 250px;
+  margin-left: 10%;
 }
 
-.quantity-field,
+.quantity-field {
+  width: 150px;
+  margin-left: 10%;
+}
 .price-field {
-    width: 150px;
-    margin-left: 175px;
+  position: absolute;
+  width: 150px;
+  top: 155px;
+  left: 247px;
 }
-
 
 .addBTN,
 .clearBTN {
-    margin: 0 5px 0 5px;
-    border: none;
-    width: 151px;
-    height: 50px;
-    background: #0D66D0;
-    border-radius: 10px;
+  margin: 0 5px 5px 5px;
+  border: none;
+  width: 151px;
+  height: 50px;
+  background: #0d66d0;
+  border-radius: 10px;
 
-    font-family: 'Helvetica Neue LT GEO';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
+  font-family: "Helvetica Neue LT GEO";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
 
-    color: #FFFFFF;
-    cursor: pointer;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 .clearBTN {
-    background: #6b6b6b;
-
+  background: #6b6b6b;
 }
 
 .addBTN:hover,
 .clearBTN:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
 .addBTN:active,
 .clearBTN:active {
-
-    transform: translateY(4px);
+  transform: translateY(4px);
 }
 
-
 .card mat-icon {
-    cursor: pointer;
-    display: block;
-    float: right;
+  cursor: pointer;
+  display: block;
+  float: right;
 }
 
 .card .deleteIcon:hover {
-
-    color: red;
+  color: red;
 }
 
 .card .editIcon:hover {
-
-    color: goldenrod;
+  color: goldenrod;
 }
 
 ::ng-deep .card p-table .p-datatable {
-    position: static;
+  position: static;
 }
 
-.generateCode {
-    margin-top: 50px;
-    margin-left: 80px;
-    text-align: center;
-}
-
-::ng-deep .generateCode .p-card-body {
-    box-shadow: 0 0 10px rgb(75 75 75);
-}
-
-.cuponCode input {
-    display: block;
-    margin-top: 10px;
-    margin-left: 63px;
-    height: 50px;
-    resize: horizontal;
-    width: 200px;
-    font-size: 20px;
-    text-align: center;
-}
-
-.expDrop {
-    margin-right: 10px;
-}
-
-.coupons {
-    float: right;
-}
-
-
-.coupon-status {
-    border-radius: 2px;
-    padding: .25em .5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: .3px;
-}
-
-.coupon-active {
-    background: #C8E6C9;
-    color: #256029;
-}
-
-
-.coupon-inactive {
-    background: #FFCDD2;
-    color: #c63737;
+.docUpload {
+  position: absolute;
+  top: 87px;
+  right: 64px;
 }

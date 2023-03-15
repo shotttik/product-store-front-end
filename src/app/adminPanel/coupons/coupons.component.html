@@ -1,0 +1,98 @@
+<div class="generateCode" style="float: left">
+  <p-card
+    header="კუპონის შექმნა"
+    subheader="დავაგენერირო კუპონი?"
+    [style]="{ width: '360px' }"
+    styleClass="p-card-shadow"
+  >
+    <div class="cuponCode">
+      <p-dropdown
+        class="expDrop"
+        [options]="expirations"
+        [(ngModel)]="selectedExp"
+        optionLabel="name"
+      ></p-dropdown>
+      <p-dropdown
+        class="discDrop"
+        [options]="discounts"
+        [(ngModel)]="selectedDisc"
+        optionLabel="name"
+      ></p-dropdown>
+      <input type="text" [value]="saleCode" pInputText disabled />
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        type="submit"
+        (click)="onSave()"
+        label="შენახვა"
+        icon="pi pi-check"
+      ></p-button>
+      <p-button
+        (click)="onGenerate()"
+        label="Generate"
+        styleClass="p-button-secondary "
+        [style]="{ 'margin-left': '.5em' }"
+        ><i
+          class="pi pi-spin pi-spinner"
+          style="font-size: 1rem; margin-right: 5px"
+        ></i>
+      </p-button>
+    </ng-template>
+  </p-card>
+</div>
+<div class="card couponsCard">
+  <p-table
+    [value]="coupons"
+    [scrollable]="true"
+    (sortFunction)="customSort($event)"
+    [customSort]="true"
+    scrollHeight="600px"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>კოდი</th>
+        <th>შექმნა</th>
+        <th>დასასრული</th>
+        <th>პროცენტი</th>
+        <th pSortableColumn="isUsed">
+          სტატუსი
+          <p-sortIcon field="isUsed"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-coupon>
+      <tr>
+        <td>{{ coupon.code }}</td>
+        <td>{{ dateConverter(coupon.createDate) }}</td>
+        <td>{{ dateConverter(coupon.endDate) }}</td>
+        <td>
+          {{ coupon.discount }}
+          <mat-icon
+            class="deleteIcon"
+            (click)="onDeleteCoupon(coupon.id, coupon.code)"
+            >delete</mat-icon
+          >
+        </td>
+        <td>
+          <span
+            *ngIf="isExpired(coupon.endDate)"
+            class="coupon-status coupon-inactive"
+          >
+            ვადაგასულია</span
+          >
+          <span
+            *ngIf="!isExpired(coupon.endDate)"
+            [class]="
+              !coupon.isUsed
+                ? 'coupon-status coupon-active'
+                : 'coupon-status coupon-inactive'
+            "
+          >
+            {{ coupon.isUsed ? "გამოყენებულია" : "გამოსაყენებელია" }}</span
+          >
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
