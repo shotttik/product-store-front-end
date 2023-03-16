@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Product } from '../interfaces/product';
 import { TransactionS } from '../interfaces/transaction';
+import { ApiService } from '../services/api.service';
 import { LocalService } from '../services/local.service';
 import { StoreService } from '../services/store.service';
 import { PaginationComponent } from './pagination/pagination.component';
@@ -45,7 +46,8 @@ export class StoreComponent implements AfterViewInit {
     private router: Router,
     private localStore: LocalService,
     private storeService: StoreService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private apiServices: ApiService
   ) {
     this.email = this.localStore.getData('email');
     this.UserID = parseInt(this.localStore.getData('id')!);
@@ -314,5 +316,12 @@ export class StoreComponent implements AfterViewInit {
         this.sum = this.sum + up.Price * up.Quantity;
       });
     }
+  }
+
+  getFilesUrl(url: string) {
+    if (!url) {
+      return '';
+    }
+    return this.apiServices.generateBackPath(url);
   }
 }
