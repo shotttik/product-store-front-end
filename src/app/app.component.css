@@ -1,11 +1,11 @@
 body {
-  background: #A0A0A0;
+  background: #a0a0a0;
 }
 
 header {
   height: 80px;
 
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.07);
 }
 
@@ -15,6 +15,11 @@ header {
   margin-right: 50px;
 }
 
-.logOutBtn button{
-      margin-right: 10px
+.logOutBtn button {
+  margin-right: 10px;
+}
+
+app-store-nav,
+app-admin-nav {
+  margin-left: 30px;
 }

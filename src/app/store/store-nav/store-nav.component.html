@@ -1,0 +1,18 @@
+<button
+  *ngIf="currentUrl != '/store'"
+  (click)="goToStore()"
+  pButton
+  type="button"
+  label="მარკეტი"
+  icon="pi pi-shopping-bag"
+  class="p-button-info"
+></button>
+<button
+  *ngIf="currentUrl != '/profile'"
+  (click)="goToProfile()"
+  pButton
+  type="button"
+  label="პროფილი"
+  icon="pi pi-user"
+  class="p-button-info"
+></button>

@@ -34,4 +34,8 @@ export class AuthService {
     const dToken = this.decodeToken();
     return dToken.IsSuperUser === 'True';
   }
+  IsAdmin() {
+    const dToken = this.decodeToken();
+    return dToken.Role == '1';
+  }
 }

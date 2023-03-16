@@ -13,10 +13,9 @@ import { LocalService } from './services/local.service';
 })
 export class AppComponent implements AfterViewInit {
   title = 'auth';
-
   constructor(
     public localService: LocalService,
-    public router: Router,
+    private router: Router,
     private messageService: MessageService,
     private authService: AuthService
   ) {}
@@ -31,35 +30,5 @@ export class AppComponent implements AfterViewInit {
       summary: 'ყურადღება!',
       detail: 'წარმატებით გახვედით ანგარიშიდან',
     });
-  }
-
-  goPRofileOrMarket(onProfile: boolean): void {
-    if (onProfile) {
-      this.router.navigate(['/store']);
-    } else {
-      this.router.navigate(['/profile']);
-    }
-  }
-  isSuperUser() {
-    return this.authService.IsSuperUser();
-  }
-
-  IsStoreComp() {
-    return this.router.url == '/store';
-  }
-
-  goToUsers(onUsers: boolean) {
-    if (onUsers) {
-      this.router.navigate(['/admin']);
-    } else {
-      this.router.navigate(['/admin/users']);
-    }
-  }
-  IsUsers() {
-    return this.router.url == '/admin/users';
-  }
-
-  goToCoupons() {
-    this.router.navigate(['/admin/coupons']);
   }
 }

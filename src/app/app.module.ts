@@ -32,6 +32,8 @@ import { UsersComponent } from './adminPanel/users/users.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CouponsComponent } from './adminPanel/coupons/coupons.component';
+import { AdminNavComponent } from './adminPanel/admin-nav/admin-nav.component';
+import { StoreNavComponent } from './store/store-nav/store-nav.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { CouponsComponent } from './adminPanel/coupons/coupons.component';
     ProfileComponent,
     UsersComponent,
     CouponsComponent,
+    AdminNavComponent,
+    StoreNavComponent,
   ],
   imports: [
     BrowserModule,

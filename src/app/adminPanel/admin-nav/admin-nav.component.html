@@ -1,0 +1,27 @@
+<button
+  *ngIf="currentUrl !== '/admin/coupons'"
+  pButton
+  type="button"
+  (click)="goToCoupons()"
+  icon="pi pi-credit-card"
+  label="კუპონები"
+  class="p-button-info"
+></button>
+<button
+  *ngIf="currentUrl !== '/admin/users' && isSuperUser()"
+  (click)="goToUsers()"
+  pButton
+  type="button"
+  icon="pi pi-user"
+  label="მომხმარებლები"
+  class="p-button-info"
+></button>
+<button
+  *ngIf="currentUrl !== '/admin'"
+  (click)="goToPanel()"
+  pButton
+  type="button"
+  icon="pi pi-home"
+  label="პანელი"
+  class="p-button-info"
+></button>
