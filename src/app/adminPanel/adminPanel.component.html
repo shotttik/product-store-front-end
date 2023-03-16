@@ -3,20 +3,20 @@
     class="ID"
     disabled
     type="number"
-    *ngIf="id"
+    *ngIf="editProduct?.ID"
     matInput
-    [(ngModel)]="id"
+    [(ngModel)]="editProduct!.ID"
   ></textarea>
   <form [formGroup]="newProductForm" (ngSubmit)="onSubmit()">
-    <div class="title" *ngIf="!id">
+    <div class="title" *ngIf="!editProduct?.ID">
       <h1>ახალი პროდუქტი</h1>
     </div>
-    <div class="title" *ngIf="id">
+    <div class="title" *ngIf="editProduct?.ID">
       <h1>პროდუქტი</h1>
     </div>
     <mat-form-field class="name-field">
       <mat-label>სახელი</mat-label>
-      <input matInput [(ngModel)]="name" formControlName="Name" />
+      <input matInput [ngModel]="editProduct?.Name" formControlName="Name" />
     </mat-form-field>
 
     <mat-form-field class="quantity-field">
@@ -24,7 +24,7 @@
       <input
         type="number"
         matInput
-        [(ngModel)]="quantity"
+        [ngModel]="editProduct?.Quantity"
         formControlName="Quantity"
       />
     </mat-form-field>
@@ -34,7 +34,7 @@
       <input
         type="number"
         matInput
-        [(ngModel)]="price"
+        [ngModel]="editProduct?.Price"
         formControlName="Price"
       />
       <mat-icon matSuffix>$</mat-icon>
@@ -42,29 +42,66 @@
     <div class="uploads">
       <div class="docUpload">
         <p-fileUpload
+          [hidden]="editProduct?.Document"
           mode="basic"
           #DocFileUpload
+          (onSelect)="docSelected($event)"
           chooseLabel="დოკუმენტი"
           accept="application/pdf"
-          (uploadHandler)="onBasicUpload($event)"
         ></p-fileUpload>
+        <a
+          [href]="documentUrl"
+          target="_blank"
+          *ngIf="editProduct?.Document"
+          [label]="nameFromPath(editProduct?.Document)"
+          #docAfterUploadBTN
+          type="button"
+          pButton
+          type="button"
+          icon="pi pi-upload"
+          iconPos="left"
+          style="text-decoration: none"
+        ></a>
+
+        <button
+          *ngIf="editProduct?.Document"
+          (click)="docRemove()"
+          pripple
+          pButton
+          type="button"
+          icon="pi pi-times "
+          class="p-element p-ripple p-button-rounded p-button-danger p-button p-component p-button-icon-only"
+        ></button>
       </div>
       <div class="imgUpload">
         <p-fileUpload
+          [hidden]="imageUrl"
           #ImgFileUpload
           accept="image/*"
-          (uploadHandler)="onBasicUpload($event)"
+          (onRemove)="removeImg($event)"
           [showUploadButton]="false"
           [showCancelButton]="false"
           chooseLabel="სურათი"
         ></p-fileUpload>
+        <div class="productImage" *ngIf="editProduct?.Image">
+          <img [src]="imageUrl" />
+        </div>
+        <button
+          *ngIf="editProduct?.Image"
+          (click)="removeImg(false)"
+          pripple
+          pButton
+          type="button"
+          icon="pi pi-times "
+          class="p-element p-ripple p-button-rounded p-button-danger p-button p-component p-button-icon-only"
+        ></button>
       </div>
     </div>
     <input
       [disabled]="!newProductForm.valid"
       type="submit"
       class="addBTN"
-      [value]="!id ? 'დამატება' : 'შენახვა'"
+      [value]="!editProduct?.ID ? 'დამატება' : 'შენახვა'"
     />
     <input
       class="clearBTN"
@@ -97,13 +134,7 @@
         <td>{{ product.Quantity }}</td>
         <td>
           {{ product.Price }}$
-          <mat-icon
-            class="editIcon"
-            (click)="
-              onEdit(product.ID, product.Name, product.Quantity, product.Price)
-            "
-            >edit</mat-icon
-          >
+          <mat-icon class="editIcon" (click)="onEdit(product)">edit</mat-icon>
           <mat-icon class="deleteIcon" (click)="onDelete(product.ID)"
             >delete</mat-icon
           >

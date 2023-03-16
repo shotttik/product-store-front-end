@@ -32,4 +32,8 @@ export class ApiService {
     formData.append('file', file, file.name);
     return this.http.post('https://localhost:7154/api/upload', formData);
   }
+
+  generateBackPath(path: string) {
+    return this.baseUrl + '\\' + path;
+  }
 }

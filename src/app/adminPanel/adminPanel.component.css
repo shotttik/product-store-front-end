@@ -75,7 +75,7 @@
 
 .addBTN,
 .clearBTN {
-  margin: 0 5px 5px 5px;
+  margin: 15px 5px 15px 5px;
   border: none;
   width: 151px;
   height: 50px;
@@ -128,5 +128,22 @@
 .docUpload {
   position: absolute;
   top: 87px;
-  right: 64px;
+  right: 20px;
+}
+.docUpload button {
+  margin-left: 10px;
+}
+
+.docUpload p-fileUpload {
+  float: left;
+}
+
+.productImage {
+  right: 10px;
+}
+
+.imgUpload button {
+  position: absolute;
+  bottom: 115px;
+  right: 215px;
 }

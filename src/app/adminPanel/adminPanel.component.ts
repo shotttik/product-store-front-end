@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -25,25 +26,18 @@ import { ApiService } from '../services/api.service';
 export class AdminPanelComponent implements OnInit {
   @ViewChild('DocFileUpload') DocFileUpload: FileUpload | undefined;
   @ViewChild('ImgFileUpload') ImgFileUpload: FileUpload | undefined;
+  @ViewChild('docAfterUploadBTN') docAfterUploadBTN:
+    | ElementRef<HTMLButtonElement>
+    | undefined;
 
   products: any = [];
   displayedColumns: string[] = ['id', 'name', 'quantity', 'price'];
   UserId: number = 0;
+  editProduct: Product | undefined;
 
-  id: number = 0;
-  name: string | undefined = undefined;
-  quantity: number | undefined = undefined;
-  price: number | undefined = undefined;
-  product: Product | undefined;
-
-  newProductForm = new FormGroup({
-    ID: this.id == 0 ? new FormControl(0) : new FormControl(this.id),
-    Name: new FormControl('', [Validators.required]),
-    Quantity: new FormControl('', [Validators.required]),
-    Price: new FormControl('', [Validators.required]),
-    Image: new FormControl(''),
-    Document: new FormControl(''),
-  });
+  documentUrl: string = '';
+  imageUrl: string = '';
+  newProductForm: FormGroup;
 
   constructor(
     private storeService: StoreService,
@@ -52,7 +46,18 @@ export class AdminPanelComponent implements OnInit {
     private messageService: MessageService,
     private authService: AuthService,
     private apiService: ApiService
-  ) {}
+  ) {
+    this.newProductForm = new FormGroup({
+      ID: !this.editProduct
+        ? new FormControl(0)
+        : new FormControl(this.editProduct?.ID),
+      Name: new FormControl('', [Validators.required]),
+      Quantity: new FormControl('', [Validators.required]),
+      Price: new FormControl('', [Validators.required]),
+      Image: new FormControl(''),
+      Document: new FormControl(''),
+    });
+  }
 
   ngOnInit() {
     this.storeService.getStoreProducts().subscribe((data) => {
@@ -61,15 +66,15 @@ export class AdminPanelComponent implements OnInit {
   }
   onSubmit() {
     if (!this.newProductForm.valid) '';
-    if (this.id) {
-      this.newProductForm.value.ID = this.id;
+    if (this.editProduct?.ID) {
+      this.newProductForm.value.ID = this.editProduct.ID;
     }
     const headers = new HttpHeaders().set(
       'Content-Type',
       'application/json; charset=utf-8'
     );
     // image and document
-
+    console.log(this.DocFileUpload!.files[0]);
     if (this.DocFileUpload!.files.length > 0) {
       this.apiService.uploadFile(this.DocFileUpload!.files[0]).subscribe({
         next: (response: any) => {
@@ -77,6 +82,8 @@ export class AdminPanelComponent implements OnInit {
         },
         error: (err) => console.log(err),
       });
+    } else {
+      this.newProductForm.value.Document = this.editProduct?.Document;
     }
     if (this.ImgFileUpload!.files.length > 0) {
       this.apiService.uploadFile(this.ImgFileUpload!.files[0]).subscribe({
@@ -85,41 +92,49 @@ export class AdminPanelComponent implements OnInit {
         },
         error: (err) => console.log(err),
       });
+    } else {
+      this.newProductForm.value.Image = this.editProduct?.Image;
     }
-    let data = JSON.stringify(this.newProductForm.value);
-    this.http
-      .post(`https://localhost:7154/api/AddProduct/`, data, {
-        headers: headers,
-      })
-      .subscribe({
-        next: (response: any) =>
-          this.messageService.add({
-            severity: 'success',
-            summary: 'ყურადღება!',
-            detail: response.Message,
-          }),
-        error: (response) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'ყურადღება!',
-            detail: response.Message,
-          });
-        },
-      });
+    setTimeout(() => {
+      this.http
+        .post(
+          `https://localhost:7154/api/AddProduct/`,
+          this.newProductForm.value,
+          {
+            headers: headers,
+          }
+        )
+        .subscribe({
+          next: (response: any) =>
+            this.messageService.add({
+              severity: 'success',
+              summary: 'ყურადღება!',
+              detail: response.Message,
+            }),
+          error: (response) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'ყურადღება!',
+              detail: response.Message,
+            });
+          },
+        });
+    }, 600);
 
     setTimeout(() => {
       this.storeService.getStoreProducts().subscribe((data) => {
         this.products = data;
       });
-    }, 100);
+    }, 650);
   }
 
   onClear() {
     // this.newProductForm.reset();
-    this.id = 0;
-    this.name = '';
-    this.price = undefined;
-    this.quantity = undefined;
+    this.editProduct = undefined;
+    this.DocFileUpload!.clear();
+    this.ImgFileUpload!.clear();
+    this.documentUrl = '';
+    this.imageUrl = '';
   }
 
   onDelete(id: number) {
@@ -150,16 +165,46 @@ export class AdminPanelComponent implements OnInit {
     );
   }
 
-  onEdit(id: number, name: string, quantity: number, price: number) {
-    this.id = id;
-    this.name = name;
-    this.quantity = quantity;
-    this.price = price;
+  onEdit(product: any) {
+    this.editProduct = product;
+    if (this.editProduct?.Document) {
+      this.documentUrl = this.apiService.generateBackPath(
+        this.editProduct?.Document
+      );
+    } else {
+      this.documentUrl = '';
+      this.DocFileUpload!.clear();
+    }
+    if (this.editProduct?.Image) {
+      this.imageUrl = this.apiService.generateBackPath(this.editProduct?.Image);
+    } else {
+      this.imageUrl = '';
+      this.ImgFileUpload!.clear();
+    }
   }
 
-  onBasicUpload(event: any) {
-    console.log(this.DocFileUpload!.files[0]);
-    this.apiService.uploadFile(this.DocFileUpload!.files[0]);
-    // this.apiService.uploadFile(this.ImgFileUpload!.files[0]);
+  docSelected(event: any) {
+    // this.document = event.currentFiles[0].name;
+  }
+
+  docRemove() {
+    this.DocFileUpload!.clear();
+    this.editProduct!.Document = '';
+    this.documentUrl = '';
+  }
+
+  removeImg(event: any) {
+    this.ImgFileUpload!.clear();
+    this.editProduct!.Image = '';
+    this.imageUrl = '';
+  }
+
+  nameFromPath(path: string | undefined) {
+    if (!path) {
+      return '';
+    }
+    var n = path.lastIndexOf('\\');
+    var result = path.substring(n + 1);
+    return result;
   }
 }
