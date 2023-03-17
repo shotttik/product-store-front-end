@@ -42,7 +42,7 @@
     <div class="uploads">
       <div class="docUpload">
         <p-fileUpload
-          [hidden]="editProduct?.Document"
+          [hidden]="documentUrl != 'დოკუმენტი'"
           mode="basic"
           #DocFileUpload
           (onSelect)="docSelected($event)"
@@ -50,10 +50,10 @@
           accept="application/pdf"
         ></p-fileUpload>
         <a
-          [href]="documentUrl"
+          [href]="getBackPath(documentUrl)"
           target="_blank"
-          *ngIf="editProduct?.Document"
-          [label]="nameFromPath(editProduct?.Document)"
+          *ngIf="documentUrl != 'დოკუმენტი'"
+          [label]="nameFromPath(documentUrl)"
           #docAfterUploadBTN
           type="button"
           pButton
@@ -64,7 +64,7 @@
         ></a>
 
         <button
-          *ngIf="editProduct?.Document"
+          *ngIf="documentUrl != 'დოკუმენტი'"
           (click)="docRemove()"
           pripple
           pButton
@@ -83,11 +83,11 @@
           [showCancelButton]="false"
           chooseLabel="სურათი"
         ></p-fileUpload>
-        <div class="productImage" *ngIf="editProduct?.Image">
-          <img [src]="imageUrl" />
+        <div class="productImage" *ngIf="imageUrl">
+          <img [src]="getBackPath(imageUrl)" />
         </div>
         <button
-          *ngIf="editProduct?.Image"
+          *ngIf="imageUrl"
           (click)="removeImg(false)"
           pripple
           pButton

@@ -35,7 +35,7 @@ export class AdminPanelComponent implements OnInit {
   UserId: number = 0;
   editProduct: Product | undefined;
 
-  documentUrl: string = '';
+  documentUrl: string = 'დოკუმენტი';
   imageUrl: string = '';
   newProductForm: FormGroup;
 
@@ -83,7 +83,8 @@ export class AdminPanelComponent implements OnInit {
         error: (err) => console.log(err),
       });
     } else {
-      this.newProductForm.value.Document = this.editProduct?.Document;
+      this.newProductForm.value.Document =
+        this.documentUrl == 'დოკუმენტი' ? '' : this.documentUrl;
     }
     if (this.ImgFileUpload!.files.length > 0) {
       this.apiService.uploadFile(this.ImgFileUpload!.files[0]).subscribe({
@@ -93,7 +94,7 @@ export class AdminPanelComponent implements OnInit {
         error: (err) => console.log(err),
       });
     } else {
-      this.newProductForm.value.Image = this.editProduct?.Image;
+      this.newProductForm.value.Image = this.imageUrl;
     }
     setTimeout(() => {
       this.http
@@ -133,7 +134,7 @@ export class AdminPanelComponent implements OnInit {
     this.editProduct = undefined;
     this.DocFileUpload!.clear();
     this.ImgFileUpload!.clear();
-    this.documentUrl = '';
+    this.documentUrl = 'დოკუმენტი';
     this.imageUrl = '';
   }
 
@@ -168,34 +169,36 @@ export class AdminPanelComponent implements OnInit {
   onEdit(product: any) {
     this.editProduct = product;
     if (this.editProduct?.Document) {
-      this.documentUrl = this.apiService.generateBackPath(
-        this.editProduct?.Document
-      );
+      this.documentUrl = this.editProduct?.Document;
     } else {
-      this.documentUrl = '';
+      this.documentUrl = 'დოკუმენტი';
       this.DocFileUpload!.clear();
     }
     if (this.editProduct?.Image) {
-      this.imageUrl = this.apiService.generateBackPath(this.editProduct?.Image);
+      this.imageUrl = this.editProduct?.Image;
     } else {
       this.imageUrl = '';
       this.ImgFileUpload!.clear();
     }
   }
 
+  getBackPath(path: string): string {
+    return this.apiService.generateBackPath(path);
+  }
+
   docSelected(event: any) {
-    // this.document = event.currentFiles[0].name;
+    this.documentUrl = 'Resources\\Documents\\' + event.currentFiles[0].name;
   }
 
   docRemove() {
     this.DocFileUpload!.clear();
-    this.editProduct!.Document = '';
-    this.documentUrl = '';
+    // this.editProduct!.Document = '';
+    this.documentUrl = 'დოკუმენტი';
   }
 
   removeImg(event: any) {
     this.ImgFileUpload!.clear();
-    this.editProduct!.Image = '';
+    // this.editProduct!.Image = '';
     this.imageUrl = '';
   }
 
